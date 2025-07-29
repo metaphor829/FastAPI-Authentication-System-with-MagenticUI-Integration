@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Magentic-UI</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    
+    <!-- 使用与登录页面相同的样式 -->
+    <style>
+        /* CSS变量 - 与Magentic-UI保持一致 */
+        .dark {
+            --color-bg-primary: #1a1a1a;
+            --color-bg-secondary: #a88da841;
+            --color-bg-light: #3a3a3a;
+            --color-bg-tertiary: #444444;
+            --color-bg-opposite: #edf2f7;
+            --color-bg-white: #ffffff;
+            --color-bg-dark: #1a1a1a;
+            --color-bg-accent: #777777;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #e5e5e58f;
+            --color-text-accent: #e5e5e5;
+            --color-border-primary: #ffffff30;
+            --color-border-secondary: #e5e5e530;
+            --color-border-accent: #1a1a1a;
+            --color-warning-primary: #F6A147;
+            --color-text-message: #000000;
+            --color-magenta-400: #F2E5F2;
+            --color-magenta-700: #EECBEE;
+            --color-magenta-800: #BF3AC3;
+            --color-magenta-900: #953CA3;
+            --color-blue-400: #EDF4FB;
+            --color-blue-700: #A0D6FF;
+            --color-blue-800: #0078d4;
+            --color-blue-900: #0062ad;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(191, 58, 195, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 120, 212, 0.1) 0%, transparent 50%);
+        }
+
+        .register-container {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--color-magenta-800), var(--color-blue-800));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: 8px;
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-magenta-800);
+            box-shadow: 0 0 0 3px rgba(191, 58, 195, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--color-text-secondary);
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, var(--color-magenta-800), var(--color-blue-800));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .register-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(191, 58, 195, 0.3);
+        }
+
+        .register-button:active {
+            transform: translateY(0);
+        }
+
+        .register-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: var(--color-magenta-800);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: rgba(246, 161, 71, 0.1);
+            border: 1px solid var(--color-warning-primary);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-warning-primary);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(0, 120, 212, 0.1);
+            border: 1px solid var(--color-blue-800);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-blue-800);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .password-requirements {
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border-secondary);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .requirement:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement.valid {
+            color: var(--color-blue-800);
+        }
+
+        .requirement.invalid {
+            color: var(--color-warning-primary);
+        }
+
+        /* 语言切换按钮 */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border-primary);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin: 0 2px;
+            transition: all 0.2s ease;
+        }
+
+        .language-btn:hover {
+            background: var(--color-bg-tertiary);
+            border-color: var(--color-magenta-800);
+        }
+
+        .language-btn.active {
+            background: var(--color-magenta-800);
+            border-color: var(--color-magenta-800);
+            color: white;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .register-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+
+            .language-btn {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="language-btn active" data-lang="en">EN</button>
+        <button class="language-btn" data-lang="zh">中</button>
+        <button class="language-btn" data-lang="ja">日</button>
+    </div>
+
+    <div class="register-container">
+        <div class="logo-section">
+            <div class="logo">🧠 Magentic-UI</div>
+            <div class="subtitle" data-i18n="subtitle">Create Your Account</div>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+
+        <form id="register-form">
+            <div class="form-group">
+                <label for="username" class="form-label" data-i18n="username_required">Username *</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-input"
+                    data-i18n-placeholder="username_placeholder"
+                    placeholder="Enter username (3-20 characters)"
+                    required
+                    autocomplete="username"
+                    minlength="3"
+                    maxlength="20"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label" data-i18n="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-input"
+                    data-i18n-placeholder="email_placeholder"
+                    placeholder="Enter email address (optional)"
+                    autocomplete="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="full_name" class="form-label" data-i18n="full_name">Full Name</label>
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    class="form-input"
+                    data-i18n-placeholder="full_name_placeholder"
+                    placeholder="Enter your full name (optional)"
+                    autocomplete="name"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label" data-i18n="password_required">Password *</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-input"
+                    data-i18n-placeholder="password_placeholder"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="new-password"
+                    minlength="8"
+                >
+                <div class="password-requirements">
+                    <div class="requirement" id="req-length" data-i18n="req_length">• At least 8 characters</div>
+                    <div class="requirement" id="req-uppercase" data-i18n="req_uppercase">• Contains uppercase letter</div>
+                    <div class="requirement" id="req-lowercase" data-i18n="req_lowercase">• Contains lowercase letter</div>
+                    <div class="requirement" id="req-number" data-i18n="req_number">• Contains number</div>
+                    <div class="requirement" id="req-special" data-i18n="req_special">• Contains special character</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password" class="form-label" data-i18n="confirm_password_required">Confirm Password *</label>
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    class="form-input"
+                    data-i18n-placeholder="confirm_password_placeholder"
+                    placeholder="Confirm your password"
+                    required
+                    autocomplete="new-password"
+                >
+            </div>
+
+            <button type="submit" id="register-button" class="register-button" data-i18n="register_button">
+                Sign Up
+            </button>
+        </form>
+
+        <div class="login-link">
+            <a href="/login" data-i18n="login_link">Already have an account? Sign in</a>
+        </div>
+    </div>
+
+    <script>
+        // 多语言支持
+        const translations = {
+            en: {
+                title: "Sign Up - Magentic-UI",
+                subtitle: "Create Your Account",
+                username_required: "Username *",
+                username_placeholder: "Enter username (3-20 characters)",
+                email: "Email",
+                email_placeholder: "Enter email address (optional)",
+                full_name: "Full Name",
+                full_name_placeholder: "Enter your full name (optional)",
+                password_required: "Password *",
+                password_placeholder: "Enter your password",
+                confirm_password_required: "Confirm Password *",
+                confirm_password_placeholder: "Confirm your password",
+                req_length: "• At least 8 characters",
+                req_uppercase: "• Contains uppercase letter",
+                req_lowercase: "• Contains lowercase letter",
+                req_number: "• Contains number",
+                req_special: "• Contains special character",
+                register_button: "Sign Up",
+                register_button_loading: "Signing up...",
+                login_link: "Already have an account? Sign in",
+                register_success: "Registration successful! Redirecting to login...",
+                username_exists: "Username already exists",
+                email_exists: "Email already exists",
+                passwords_not_match: "Passwords do not match",
+                network_error: "Network error, please try again later"
+            },
+            zh: {
+                title: "注册 - Magentic-UI",
+                subtitle: "创建您的账户",
+                username_required: "用户名 *",
+                username_placeholder: "请输入用户名（3-20位字符）",
+                email: "邮箱",
+                email_placeholder: "请输入邮箱地址（可选）",
+                full_name: "姓名",
+                full_name_placeholder: "请输入真实姓名（可选）",
+                password_required: "密码 *",
+                password_placeholder: "请输入密码",
+                confirm_password_required: "确认密码 *",
+                confirm_password_placeholder: "请再次输入密码",
+                req_length: "• 至少8个字符",
+                req_uppercase: "• 包含大写字母",
+                req_lowercase: "• 包含小写字母",
+                req_number: "• 包含数字",
+                req_special: "• 包含特殊字符",
+                register_button: "注册",
+                register_button_loading: "注册中...",
+                login_link: "已有账户？立即登录",
+                register_success: "注册成功！正在跳转到登录页面...",
+                username_exists: "用户名已存在",
+                email_exists: "邮箱已存在",
+                passwords_not_match: "密码不匹配",
+                network_error: "网络错误，请稍后重试"
+            },
+            ja: {
+                title: "サインアップ - Magentic-UI",
+                subtitle: "アカウントを作成",
+                username_required: "ユーザー名 *",
+                username_placeholder: "ユーザー名を入力（3-20文字）",
+                email: "メールアドレス",
+                email_placeholder: "メールアドレスを入力（任意）",
+                full_name: "氏名",
+                full_name_placeholder: "氏名を入力（任意）",
+                password_required: "パスワード *",
+                password_placeholder: "パスワードを入力",
+                confirm_password_required: "パスワード確認 *",
+                confirm_password_placeholder: "パスワードを再入力",
+                req_length: "• 8文字以上",
+                req_uppercase: "• 大文字を含む",
+                req_lowercase: "• 小文字を含む",
+                req_number: "• 数字を含む",
+                req_special: "• 特殊文字を含む",
+                register_button: "サインアップ",
+                register_button_loading: "サインアップ中...",
+                login_link: "既にアカウントをお持ちの方はこちら",
+                register_success: "登録成功！ログインページにリダイレクト中...",
+                username_exists: "ユーザー名は既に存在します",
+                email_exists: "メールアドレスは既に存在します",
+                passwords_not_match: "パスワードが一致しません",
+                network_error: "ネットワークエラーが発生しました。しばらくしてから再試行してください"
+            }
+        };
+
+        // 現在の言語（デフォルトは英語）
+        let currentLang = localStorage.getItem('preferred_language') || 'en';
+
+        // 言語切り替え関数
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('preferred_language', lang);
+
+            // HTMLのlang属性を更新
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en';
+
+            // タイトルを更新
+            document.title = translations[lang].title;
+
+            // すべての翻訳要素を更新
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // プレースホルダーを更新
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+
+            // 言語ボタンのアクティブ状態を更新
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // 言語ボタンのイベントリスナー
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        // ページ読み込み時に保存された言語を適用
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage(currentLang);
+        });
+
+        // 密码强度验证
+        function validatePassword(password) {
+            const requirements = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                lowercase: /[a-z]/.test(password),
+                number: /\d/.test(password),
+                special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+            };
+
+            // 更新UI显示
+            Object.keys(requirements).forEach(req => {
+                const element = document.getElementById(`req-${req}`);
+                if (requirements[req]) {
+                    element.classList.remove('invalid');
+                    element.classList.add('valid');
+                } else {
+                    element.classList.remove('valid');
+                    element.classList.add('invalid');
+                }
+            });
+
+            return Object.values(requirements).every(Boolean);
+        }
+
+        // 密码输入监听
+        document.getElementById('password').addEventListener('input', (e) => {
+            validatePassword(e.target.value);
+        });
+
+        // 注册表单处理
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const button = document.getElementById('register-button');
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            // 隐藏之前的消息
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            const formData = new FormData(e.target);
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirm_password');
+            
+            // 验证密码
+            if (!validatePassword(password)) {
+                errorDiv.textContent = '密码不符合要求，请检查密码强度';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorDiv.textContent = translations[currentLang].passwords_not_match;
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // 显示加载状态
+            button.disabled = true;
+            button.innerHTML = '<span class="loading"></span>' + translations[currentLang].register_button_loading;
+
+            try {
+                const registerData = {
+                    username: formData.get('username'),
+                    email: formData.get('email') || null,
+                    full_name: formData.get('full_name') || null,
+                    password: password
+                };
+                
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registerData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // 注册成功
+                    successDiv.textContent = translations[currentLang].register_success;
+                    successDiv.style.display = 'block';
+
+                    // 跳转到登录页面
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                } else {
+                    // 注册失败
+                    let errorMessage = data.detail || 'Registration failed, please try again';
+                    if (data.detail && data.detail.includes('用户名已存在') || data.detail && data.detail.includes('Username already exists')) {
+                        errorMessage = translations[currentLang].username_exists;
+                    } else if (data.detail && data.detail.includes('邮箱已存在') || data.detail && data.detail.includes('Email already exists')) {
+                        errorMessage = translations[currentLang].email_exists;
+                    }
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Register error:', error);
+                errorDiv.textContent = translations[currentLang].network_error;
+                errorDiv.style.display = 'block';
+            } finally {
+                // 恢复按钮状态
+                button.disabled = false;
+                button.innerHTML = translations[currentLang].register_button;
+            }
+        });
+    </script>
+</body>
+</html>

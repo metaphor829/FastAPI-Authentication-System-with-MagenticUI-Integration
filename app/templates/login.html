@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Magentic-UI</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    
+    <!-- Magentic-UI 风格的CSS -->
+    <style>
+        /* CSS变量 - 与Magentic-UI保持一致 */
+        .dark {
+            --color-bg-primary: #1a1a1a;
+            --color-bg-secondary: #a88da841;
+            --color-bg-light: #3a3a3a;
+            --color-bg-tertiary: #444444;
+            --color-bg-opposite: #edf2f7;
+            --color-bg-white: #ffffff;
+            --color-bg-dark: #1a1a1a;
+            --color-bg-accent: #777777;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #e5e5e58f;
+            --color-text-accent: #e5e5e5;
+            --color-border-primary: #ffffff30;
+            --color-border-secondary: #e5e5e530;
+            --color-border-accent: #1a1a1a;
+            --color-warning-primary: #F6A147;
+            --color-text-message: #000000;
+            --color-magenta-400: #F2E5F2;
+            --color-magenta-700: #EECBEE;
+            --color-magenta-800: #BF3AC3;
+            --color-magenta-900: #953CA3;
+            --color-blue-400: #EDF4FB;
+            --color-blue-700: #A0D6FF;
+            --color-blue-800: #0078d4;
+            --color-blue-900: #0062ad;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(191, 58, 195, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 120, 212, 0.1) 0%, transparent 50%);
+        }
+
+        .login-container {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--color-magenta-800), var(--color-blue-800));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border-primary);
+            border-radius: 8px;
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-magenta-800);
+            box-shadow: 0 0 0 3px rgba(191, 58, 195, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--color-text-secondary);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--color-magenta-800);
+        }
+
+        .checkbox-label {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* 密码输入框容器 */
+        .password-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-input {
+            padding-right: 45px !important;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle-btn:hover {
+            color: #ffffff;
+        }
+
+        .password-toggle-btn:focus {
+            outline: none;
+            color: #8b5cf6;
+        }
+
+        .eye-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Caps Lock 警告样式 */
+        .caps-warning {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 6px;
+            color: #fbbf24;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .warning-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 通用隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, var(--color-magenta-800), var(--color-blue-800));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .login-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(191, 58, 195, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .register-link a {
+            color: var(--color-magenta-800);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: rgba(246, 161, 71, 0.1);
+            border: 1px solid var(--color-warning-primary);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-warning-primary);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(0, 120, 212, 0.1);
+            border: 1px solid var(--color-blue-800);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-blue-800);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 语言切换按钮 */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border-primary);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin: 0 2px;
+            transition: all 0.2s ease;
+        }
+
+        .language-btn:hover {
+            background: var(--color-bg-tertiary);
+            border-color: var(--color-magenta-800);
+        }
+
+        .language-btn.active {
+            background: var(--color-magenta-800);
+            border-color: var(--color-magenta-800);
+            color: white;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+
+            .language-btn {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="language-btn active" data-lang="en">EN</button>
+        <button class="language-btn" data-lang="zh">中</button>
+        <button class="language-btn" data-lang="ja">日</button>
+    </div>
+
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo">🧠 Magentic-UI</div>
+            <div class="subtitle" data-i18n="subtitle">Intelligent AI Assistant Platform</div>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username" class="form-label" data-i18n="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-input"
+                    data-i18n-placeholder="username_placeholder"
+                    placeholder="Enter your username"
+                    required
+                    autocomplete="username"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label" data-i18n="password">Password</label>
+                <div class="password-input-container">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-input password-input"
+                        data-i18n-placeholder="password_placeholder"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <button type="button" id="togglePassword" class="password-toggle-btn">
+                        <svg id="eyeIcon" class="eye-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <svg id="eyeOffIcon" class="eye-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Caps Lock 警告 -->
+                <div id="capsLockWarning" class="caps-warning hidden">
+                    <svg class="warning-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.268 18.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                    <span data-i18n="caps_lock_on">Caps Lock is ON</span>
+                </div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="remember-me" name="remember_me" class="checkbox">
+                <label for="remember-me" class="checkbox-label" data-i18n="remember_me">Remember me</label>
+            </div>
+
+            <button type="submit" id="login-button" class="login-button" data-i18n="login_button">
+                Login
+            </button>
+        </form>
+
+        <div class="register-link">
+            <a href="/register" data-i18n="register_link">Don't have an account? Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        // 多语言支持
+        const translations = {
+            en: {
+                title: "Login - Magentic-UI",
+                subtitle: "Intelligent AI Assistant Platform",
+                username: "Username",
+                username_placeholder: "Enter your username",
+                password: "Password",
+                password_placeholder: "Enter your password",
+                remember_me: "Remember me",
+                login_button: "Login",
+                login_button_loading: "Logging in...",
+                register_link: "Don't have an account? Sign up",
+                login_success: "Login successful! Redirecting...",
+                login_failed: "Login failed, please check your username and password",
+                network_error: "Network error, please try again later",
+                already_logged_in: "You are already logged in, redirecting...",
+                caps_lock_on: "Caps Lock is ON"
+            },
+            zh: {
+                title: "登录 - Magentic-UI",
+                subtitle: "智能AI助手平台",
+                username: "用户名",
+                username_placeholder: "请输入用户名",
+                password: "密码",
+                password_placeholder: "请输入密码",
+                remember_me: "记住我",
+                login_button: "登录",
+                login_button_loading: "登录中...",
+                register_link: "还没有账户？立即注册",
+                login_success: "登录成功！正在跳转...",
+                login_failed: "登录失败，请检查用户名和密码",
+                network_error: "网络错误，请稍后重试",
+                already_logged_in: "您已登录，正在跳转...",
+                caps_lock_on: "大写锁定已开启"
+            },
+            ja: {
+                title: "ログイン - Magentic-UI",
+                subtitle: "インテリジェントAIアシスタントプラットフォーム",
+                username: "ユーザー名",
+                username_placeholder: "ユーザー名を入力してください",
+                password: "パスワード",
+                password_placeholder: "パスワードを入力してください",
+                remember_me: "ログイン状態を保持",
+                login_button: "ログイン",
+                login_button_loading: "ログイン中...",
+                register_link: "アカウントをお持ちでない方はこちら",
+                login_success: "ログイン成功！リダイレクト中...",
+                login_failed: "ログインに失敗しました。ユーザー名とパスワードを確認してください",
+                network_error: "ネットワークエラーが発生しました。しばらくしてから再試行してください",
+                already_logged_in: "既にログインしています。リダイレクト中...",
+                caps_lock_on: "Caps Lockがオンになっています"
+            }
+        };
+
+        // 現在の言語（デフォルトは英語）
+        let currentLang = localStorage.getItem('preferred_language') || 'en';
+
+        // 言語切り替え関数
+        function switchLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('preferred_language', lang);
+
+            // HTMLのlang属性を更新
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en';
+
+            // タイトルを更新
+            document.title = translations[lang].title;
+
+            // すべての翻訳要素を更新
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // プレースホルダーを更新
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+
+            // 言語ボタンのアクティブ状態を更新
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // 言語ボタンのイベントリスナー
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                switchLanguage(lang);
+            });
+        });
+
+        // ページ読み込み時に保存された言語を適用
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage(currentLang);
+        });
+
+        // 登録表单处理
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const button = document.getElementById('login-button');
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            // 隐藏之前的消息
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            // 显示加载状态
+            button.disabled = true;
+            button.innerHTML = '<span class="loading"></span>' + translations[currentLang].login_button_loading;
+
+            try {
+                const formData = new FormData(e.target);
+                const loginData = {
+                    username: formData.get('username'),
+                    password: formData.get('password'),
+                    remember_me: formData.get('remember_me') === 'on'
+                };
+
+                console.log("=== Login Attempt ===");
+                console.log("Login data:", { username: loginData.username, remember_me: loginData.remember_me });
+
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                console.log("Response status:", response.status);
+                console.log("Response ok:", response.ok);
+
+                const data = await response.json();
+                console.log("Response data:", data);
+                
+                if (response.ok) {
+                    // 登录成功
+                    console.log("✅ LOGIN SUCCESSFUL - Setting up new session");
+                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+
+                    // ✅ 登录成功
+                    console.log("🔄 Login successful");
+
+                    // 处理 Remember Me 功能
+                    const rememberMe = document.getElementById('remember-me').checked;
+                    if (rememberMe) {
+                        localStorage.setItem('remember_me_enabled', 'true');
+                        localStorage.setItem('remember_me_timestamp', Date.now().toString());
+                        console.log("✅ Remember Me ENABLED - will auto-login next time");
+                    } else {
+                        localStorage.removeItem('remember_me_enabled');
+                        localStorage.removeItem('remember_me_timestamp');
+                        console.log("❌ Remember Me DISABLED - manual login required next time");
+                    }
+
+                    successDiv.textContent = translations[currentLang].login_success;
+                    successDiv.style.display = 'block';
+
+                    // 通过URL参数传递token到Magentic-UI，解决跨域localStorage问题
+                    const params = new URLSearchParams({
+                        token: data.access_token,
+                        user: JSON.stringify(data.user)
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = `http://127.0.0.1:8081?${params.toString()}`;
+                    }, 1000);
+                } else {
+                    // 登录失败
+                    console.error("Login failed:", data);
+                    errorDiv.textContent = data.detail || translations[currentLang].login_failed;
+                    errorDiv.style.display = 'block';
+
+                    // 登录失败时不清空表单，保留用户输入
+                    console.log("Login failed - keeping form data");
+                }
+            } catch (error) {
+                console.error('Login network error:', error);
+                errorDiv.textContent = translations[currentLang].network_error;
+                errorDiv.style.display = 'block';
+
+                // 网络错误时也不清空表单
+                console.log("Network error - keeping form data");
+            } finally {
+                // 恢复按钮状态
+                button.disabled = false;
+                button.innerHTML = translations[currentLang].login_button;
+
+                // 重要：不要重置表单！
+                console.log("Button state restored, form data preserved");
+            }
+        });
+
+        // 🎯 智能自动登录逻辑 - 完美的logout保护机制
+        function checkIntelligentAutoLogin() {
+            console.log("=== 🎯 SIMPLE Auto-login Check ===");
+            console.log("Current URL:", window.location.href);
+            console.log("Page load time:", new Date().toLocaleString());
+
+            // 🔍 首先检查URL参数 - 处理跨端口logout指令
+            const urlParams = new URLSearchParams(window.location.search);
+            const clearRememberMe = urlParams.get('clear_remember_me');
+            const logoutTime = urlParams.get('logout_time');
+
+            if (clearRememberMe === 'true') {
+                console.log("🧹 LOGOUT INSTRUCTION RECEIVED - Clearing Remember Me data...");
+                console.log("🗑️ Logout time:", logoutTime);
+
+                // 清除Remember Me相关数据
+                localStorage.removeItem('remember_me_enabled');
+                localStorage.removeItem('remember_me_timestamp');
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user');
+
+                console.log("✅ Remember Me data cleared due to logout instruction");
+                console.log("🔒 Auto-login completely disabled");
+
+                // 清除URL参数，避免重复处理
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+
+                // 直接返回，不进行自动登录检查
+                console.log("💡 Manual login required after logout");
+                return;
+            }
+
+            // 获取关键状态
+            const hasToken = localStorage.getItem('access_token');
+            const rememberMeEnabled = localStorage.getItem('remember_me_enabled') === 'true';
+            const rememberMeTimestamp = localStorage.getItem('remember_me_timestamp');
+
+            console.log("📊 Current state:", {
+                hasToken: !!hasToken,
+                rememberMeEnabled: rememberMeEnabled,
+                rememberMeTimestamp: rememberMeTimestamp
+            });
+
+            // 🎯 核心规则：只有Remember Me为true才自动跳转
+            if (!rememberMeEnabled) {
+                console.log("🚫 REMEMBER ME DISABLED - No auto-login");
+                console.log("💡 User must manually login or enable Remember Me");
+                return;
+            }
+
+            // ✅ Remember Me启用，检查其他条件
+            if (hasToken && rememberMeTimestamp) {
+                const rememberTime = parseInt(rememberMeTimestamp);
+                const now = Date.now();
+                const hoursDiff = (now - rememberTime) / (1000 * 60 * 60);
+
+                console.log("⏰ Remember Me age:", hoursDiff.toFixed(2), "hours");
+
+                if (hoursDiff < 24) {
+                    console.log("✅ REMEMBER ME AUTO-LOGIN:");
+                    console.log("  - Valid token: ✅");
+                    console.log("  - Remember Me enabled: ✅");
+                    console.log("  - Within 24 hours: ✅");
+                    console.log("🚀 Auto-redirecting to main interface...");
+
+                    document.getElementById('success-message').textContent = translations[currentLang].already_logged_in;
+                    document.getElementById('success-message').style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'http://127.0.0.1:8081';
+                    }, 1000);
+                } else {
+                    console.log("⏰ Remember Me expired (>24h) - clearing data");
+                    localStorage.removeItem('remember_me_enabled');
+                    localStorage.removeItem('remember_me_timestamp');
+                    localStorage.removeItem('access_token');
+                    localStorage.removeItem('user');
+                }
+            } else {
+                console.log("❌ Auto-login conditions not met:");
+                console.log("  - Valid token:", !!hasToken);
+                console.log("  - Remember Me timestamp:", !!rememberMeTimestamp);
+                console.log("💡 Manual login required");
+            }
+
+            // 规则2: 必须同时满足三个条件才能自动跳转
+            // - 有有效token
+            // - 明确勾选了Remember Me
+            // - Remember Me时间戳在24小时内
+            if (hasToken && rememberMeEnabled && rememberMeTimestamp) {
+                const rememberTime = parseInt(rememberMeTimestamp);
+                const now = Date.now();
+                const hoursDiff = (now - rememberTime) / (1000 * 60 * 60);
+
+                console.log("Remember Me age:", hoursDiff.toFixed(2), "hours");
+
+                if (hoursDiff < 24) {
+                    console.log("✅ Auto-login conditions met - redirecting...");
+                    document.getElementById('success-message').textContent = translations[currentLang].already_logged_in;
+                    document.getElementById('success-message').style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'http://127.0.0.1:8081';
+                    }, 1000);
+                } else {
+                    console.log("⏰ Remember Me expired - clearing...");
+                    localStorage.removeItem('remember_me_enabled');
+                    localStorage.removeItem('remember_me_timestamp');
+                }
+            } else {
+                console.log("❌ Auto-login conditions not met - manual login required");
+            }
+        }
+
+        // 🎯 智能自动登录检查 - 完美的logout保护
+        checkIntelligentAutoLogin();
+
+        // 密码显示/隐藏切换功能
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.add('hidden');
+                eyeOffIcon.classList.remove('hidden');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('hidden');
+                eyeOffIcon.classList.add('hidden');
+            }
+        });
+
+        // Caps Lock 检测功能
+        function checkCapsLock(event) {
+            const capsLockWarning = document.getElementById('capsLockWarning');
+
+            // 检测 Caps Lock 状态
+            if (event.getModifierState && event.getModifierState('CapsLock')) {
+                capsLockWarning.classList.remove('hidden');
+            } else {
+                capsLockWarning.classList.add('hidden');
+            }
+        }
+
+        // 为密码输入框添加 Caps Lock 检测
+        const passwordInput = document.getElementById('password');
+        passwordInput.addEventListener('keydown', checkCapsLock);
+        passwordInput.addEventListener('keyup', checkCapsLock);
+
+        // 当密码输入框失去焦点时隐藏 Caps Lock 警告
+        passwordInput.addEventListener('blur', function() {
+            document.getElementById('capsLockWarning').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
