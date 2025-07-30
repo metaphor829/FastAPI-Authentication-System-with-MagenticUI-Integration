@@ -199,7 +199,6 @@ robocopy public ..\src\magentic_ui\backend\web\ui /E /IS
 
 - **API Docs**: http://localhost:8000/docs (Interactive Swagger UI)
 - **User Guide**: See `user_guide.md` for detailed usage instructions
-- **Technical Details**: See `技术实现详解.md` for implementation details (Chinese)
 
 ## 🤝 Contributing
 
