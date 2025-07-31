@@ -2,6 +2,8 @@
 
 A comprehensive authentication system built with FastAPI, featuring user management, JWT tokens, and seamless integration with Magentic-UI web interface.
 
+> **About Magentic-UI**: Magentic-UI is Microsoft's open-source web interface for AI agents, providing a modern React-based UI for interacting with AI systems. Learn more at [microsoft/magentic-ui](https://github.com/microsoft/magentic-ui).
+
 ## 🚀 Features
 
 ### Authentication System
